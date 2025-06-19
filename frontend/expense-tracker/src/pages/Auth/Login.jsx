@@ -31,7 +31,7 @@ const Login = () => {
 
   return (
     <AuthLayout>
-      <h2 className="text-xl font-semibold text-gray-700 mb-6">Log in to continue</h2>
+      <h2 className="text-xl font-semibold text-gray-50 mb-6">Log in to continue</h2>
 
 
       {/* Error message */}
@@ -42,7 +42,7 @@ const Login = () => {
       )}
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Email</label>
+          <label className="block mb-1 text-sm font-medium text-gray-50">Email</label>
           <input
             type="email"
             value={email}
@@ -53,7 +53,7 @@ const Login = () => {
         </div>
 
         <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Password</label>
+          <label className="block mb-1 text-sm font-medium text-gray-50">Password</label>
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
@@ -65,7 +65,7 @@ const Login = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600 hover:underline"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-white hover:underline"
             >
               {showPassword ? "Hide" : "Show"}
             </button>
@@ -80,7 +80,7 @@ const Login = () => {
         </button>
       </form>
 
-      <p className="text-center text-sm text-gray-500 mt-4">
+      <p className="text-center text-sm text-gray-50 mt-4">
         Don't have an account?{" "}
         <a href="signup" className="text-blue-600 hover:underline">
           Sign up
