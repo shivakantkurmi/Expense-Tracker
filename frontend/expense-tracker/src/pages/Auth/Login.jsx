@@ -25,7 +25,7 @@ const Login = () => {
     console.log("Email:", email);
     console.log("Password:", password);
 
-    // TODO: Replace with real login logic (API or Firebase)
+    // TODO: Replace with real login (API)
     alert(`Logging in as ${email}`);
   };
 
