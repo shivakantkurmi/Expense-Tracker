@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
-@theme{
+:root{
     --font-display: "Roboto","sans-serif";
     --breakpoint-3xl:1920;
     --color-primary:#875cf5;
