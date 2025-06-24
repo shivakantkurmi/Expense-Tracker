@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import AuthLayout from "../../components/layouts/AuthLayout";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,15 +27,14 @@ const Login = () => {
     console.log("Email:", email);
     console.log("Password:", password);
 
-    // TODO: Replace with real login (API)
-    alert(`Logging in as ${email}`);
-    
+    // Simulate successful login by setting a token
+    localStorage.setItem("token", "temp-auth-token"); // Temporary token
+    navigate("/dashboard"); // Redirect to dashboard
   };
 
   return (
     <AuthLayout>
       <h2 className="text-xl font-semibold text-gray-50 mb-6">Log in to continue</h2>
-
 
       {/* Error message */}
       {error && (
@@ -83,7 +84,7 @@ const Login = () => {
 
       <p className="text-center text-sm text-gray-50 mt-4">
         Don't have an account?{" "}
-        <a href="signup" className="text-blue-600 hover:underline">
+        <a href="/signUp" className="text-blue-600 hover:underline">
           Sign up
         </a>
       </p>
