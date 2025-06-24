@@ -27,6 +27,7 @@ const Login = () => {
 
     // TODO: Replace with real login (API)
     alert(`Logging in as ${email}`);
+    
   };
 
   return (
