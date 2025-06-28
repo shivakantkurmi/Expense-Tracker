@@ -30,7 +30,7 @@ exports.registerUser = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(500).json({ message: "Error Registering User", error: err.message });
+    res.status(500).json({ message: "Error Registering User"});
   }
 };
 
@@ -56,7 +56,7 @@ exports.loginUser = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(500).json({ message: "Login failed", error: err.message });
+    res.status(500).json({ message: "Login failed"});
   }
 };
 
@@ -78,6 +78,6 @@ exports.getUserInfo = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(401).json({ message: "Invalid or expired token", error: err.message });
+    res.status(401).json({ message: "Invalid or expired token"});
   }
 };
