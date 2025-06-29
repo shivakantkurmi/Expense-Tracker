@@ -7,6 +7,11 @@ const connectDB = require("./config/db");
 dotenv.config();
 const app = express();
 
+app.get("/", (req, res) => {
+  res.send("🟢 API is working!");
+});
+
+
 app.use(
   cors({
     origin: process.env.CLIENT_URL, // will be http://localhost:5173
