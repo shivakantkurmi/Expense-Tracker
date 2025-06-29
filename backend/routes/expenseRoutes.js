@@ -1,19 +1,21 @@
-// const express = require("express");
-// const router = express.Router();
-// const {
-//   getExpenses,
-//   addExpense,
+const express = require("express");
+const router = express.Router();
+
+const {
+  addExpense,
+  getAllExpense,
 //   updateExpense,
-//   deleteExpense,
-// } = require("../controllers/expenseController");
+  deleteExpense,
+  downloadExpenseExcel
+} = require("../controllers/expenseController");
 
-// const auth = require("../middleware/authMiddleware");
+const protect = require("../middleware/authMiddleware");
 
-// router.use(auth);
-
-// router.get("/", getExpenses);
-// router.post("/", addExpense);
+router.use(protect);
+router.post("/add", addExpense);
+router.get("/all", getAllExpense);
 // router.put("/:id", updateExpense);
-// router.delete("/:id", deleteExpense);
+router.delete("/:id", deleteExpense);
+router.get("/downloadexcel", downloadExpenseExcel);
 
-// module.exports = router;
+module.exports = router;
