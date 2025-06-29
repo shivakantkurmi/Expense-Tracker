@@ -51,10 +51,8 @@ const Login = () => {
   };
 
   return (
-    // Full screen gradient background container
     <div className="">
       <AuthLayout>
-        {/* Header text in black */}
         <h2 className="text-xl font-semibold text-black mb-6">Log in to continue</h2>
 
         {error && (
@@ -68,7 +66,6 @@ const Login = () => {
           className="space-y-5 bg-white rounded-xl p-6 shadow-lg w-full max-w-md"
         >
           <div>
-            {/* Labels in black */}
             <label className="block mb-1 text-sm font-medium text-black">Email</label>
             <input
               type="email"

@@ -27,7 +27,6 @@ exports.getDashboardData = async (req, res) => {
     const expensesLast30Days = allExpense.filter(item => new Date(item.date) >= thirtyDaysAgo);
     const totalExpenseLast30Days = expensesLast30Days.reduce((sum, item) => sum + item.amount, 0);
 
-    // Last 5 transactions (combined)
     const recentTransactions = [
       ...allIncome.map(item => ({ ...item._doc, type: "income" })),
       ...allExpense.map(item => ({ ...item._doc, type: "expense" }))
