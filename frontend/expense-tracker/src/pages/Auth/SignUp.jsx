@@ -1,29 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AuthLayout from "../../components/layouts/AuthLayout";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const { updateUser } = useContext(UserContext);
+
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Simple validation
     if (!name) return setError("Name is required.");
     if (!email) return setError("Email is required.");
-    if (password.length < 6)
-      return setError("Password must be at least 6 characters.");
+    if (password.length < 6) return setError("Password must be at least 6 characters.");
 
     setError("");
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Password:", password);
+    setLoading(true);
 
-    // TODO: Replace with actual sign-up logic
-    alert(`Account created for ${name}`);
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        fullName: name,
+        email,
+        password,
+      });
+
+      const { token, user: userData } = response.data.user;
+
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(userData);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      if (error.response?.data?.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Registration failed. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -81,15 +106,18 @@ const Signup = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          className={`w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition ${
+            loading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          disabled={loading}
         >
-          Sign Up
+          {loading ? "Signing up..." : "Sign Up"}
         </button>
       </form>
 
       <p className="text-center text-sm text-gray-50 mt-4">
         Already have an account?{" "}
-        <a href="login" className="text-blue-600 hover:underline">
+        <a href="/login" className="text-blue-600 hover:underline">
           Log in
         </a>
       </p>

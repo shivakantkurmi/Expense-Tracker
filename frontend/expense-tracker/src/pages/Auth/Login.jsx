@@ -1,15 +1,23 @@
 import React, { useState } from "react";
 import AuthLayout from "../../components/layouts/AuthLayout";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 const Login = () => {
+  // console.log("Login component mounted"); // Debug log
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const{updateUser}=useContext(UserContext);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Basic validation
@@ -24,19 +32,35 @@ const Login = () => {
     }
 
     setError("");
-    console.log("Email:", email);
-    console.log("Password:", password);
+    setLoading(true);
 
-    // Simulate successful login by setting a token
-    localStorage.setItem("token", "temp-auth-token"); // Temporary token
-    navigate("/dashboard"); // Redirect to dashboard
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, { email, password });
+      const { user } = response.data;
+      const token = user.token;
+
+
+
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(user);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <AuthLayout>
       <h2 className="text-xl font-semibold text-gray-50 mb-6">Log in to continue</h2>
 
-      {/* Error message */}
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 mb-4 rounded">
           {error}
@@ -76,17 +100,19 @@ const Login = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          className={`w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition ${loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          disabled={loading}
         >
-          Log In
+          {loading ? "Logging in..." : "Log In"}
         </button>
       </form>
 
       <p className="text-center text-sm text-gray-50 mt-4">
         Don't have an account?{" "}
-        <a href="/signUp" className="text-blue-600 hover:underline">
+        <Link to="/signUp" className="text-blue-600 hover:underline">
           Sign up
-        </a>
+        </Link>
       </p>
     </AuthLayout>
   );
