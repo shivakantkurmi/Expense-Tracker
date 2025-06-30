@@ -1,4 +1,4 @@
-export const BASE_URL = "https://expense-tracker-backend-topaz.vercel.app";
+export const BASE_URL = "https://expense-tracker-snowy-gamma.vercel.app";
 
 export const API_PATHS = {
   AUTH: {
